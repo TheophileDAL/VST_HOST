@@ -7,7 +7,7 @@ from vocal_command import VocalCommand
 from ble_command import BleCommand
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--vc", help="--enable_vocal_commands" action="store_true")
+parser.add_argument("--vc", help="enable vocal commands", action="store_true")
 args = parser.parse_args()
 
 if args.vc:
