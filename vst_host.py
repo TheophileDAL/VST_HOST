@@ -31,8 +31,8 @@ for filename in os.listdir(PLUGINS_DIR):
         print(f"[WARN] {filename} n'a pas de get_info(), ignoré.")
         continue
     
+    info = module.get_info()
     if (info["gui"] == False or os.environ.get('DISPLAY') is not None):
-        info = module.get_info()
         host_list[info["stream"]]["list"].append(dict(name=info["name"]))
         host_classes[info["stream"]]["list"].append(info["class"])
 
