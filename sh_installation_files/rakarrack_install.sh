@@ -3,10 +3,11 @@
 set -e
 
 PLUGIN_NAME="Rakarrack-plus"
+TMP_DIR="/tmp"
 
 echo "${PLUGIN_NAME} installation"
 
-# 1.Dépendances (Debian/Ubuntu)
+#1.Dépendances (Debian/Ubuntu)
 echo "[+] Installation des dépendances..."
 sudo apt update
 sudo apt install -y \
@@ -16,14 +17,45 @@ sudo apt install -y \
     libpng-dev libjpeg-dev libsndfile1-dev libsamplerate0-dev \
     libfftw3-dev liblo-dev \
     libasound2-dev jackd2 libjack-jackd2-dev \
-    lv2-dev
+    lv2-dev \
+    libxpm-dev
 
-# 2.Récupération du code source
+cd "$TMP_DIR"
+
+#2.Getting NTK
+if [ -d "${TMP_DIR}/ntk-unofficial" ]; then
+    echo "[!] Existing directory found, removing..."
+    rm -rf "${TMP_DIR}/ntk-unofficial"
+fi
+
+git clone https://github.com/Stazed/ntk-unofficial.git
+cd ntk-unofficial
+./waf configure
+./waf
+sudo ./waf install
+
+echo "Vérification de NTK..."
+if ! pkg-config --exists ntk; then
+    echo "Installation de NTK..."
+    apt-get install -y libntk-dev || {
+        git clone https://github.com/linuxaudio/ntk.git /tmp/ntk
+        cd /tmp/ntk
+        ./waf configure && ./waf && ./waf install
+        cd -
+    }
+fi
+
+if [ -d "${TMP_DIR}/rakarrack-plus" ]; then
+    echo "[!] Existing directory found, removing..."
+    rm -rf "${TMP_DIR}/rakarrack-plus"
+fi
+
+#3.Récupération du code source de Rakarrack-plus
 echo "[+] Clonage du dépot..."
 git clone https://github.com/Stazed/rakarrack-plus.git
 cd rakarrack-plus
 
-# 3.Compilation
+#4.Compilation
 echo "[+] Compilation..."
 mkdir -p build
 cd build
@@ -35,11 +67,11 @@ cmake .. \
 
 make -j$(nproc)
 
-# 4.Installation
+#5.Installation
 echo "[+] Installation..."
 sudo make install
 
-# 5.Rafraichissement cache
+#6.Rafraichissement cache
 sudo ldconfig
 
 echo "${PLUGIN_NAME} is succesfully installed"
