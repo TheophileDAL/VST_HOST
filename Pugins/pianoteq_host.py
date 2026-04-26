@@ -3,10 +3,11 @@ import asyncio
 import requests
 import os
 
+from plugin import Modartt
 from jack_server import Jack
 
 HOST_NAME = "Pianoteq"
-PIANOTEQ_EXE = "/home/theo-rasp/Music/VST/Pianoteq 9/arm-64bit/Pianoteq 9"
+PIANOTEQ_EXE = "pianoteq"
 
 remote_server = '127.0.0.1:8081'
 
@@ -17,7 +18,7 @@ def get_info() -> dict:
         "stream": 0   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
     }
 
-class Pianoteq:
+class Pianoteq(Modartt):
 
     def __init__(self):  
         self.process = None
@@ -26,8 +27,12 @@ class Pianoteq:
         self.jack = Jack()
         
     @classmethod
-    def is_plugin_installed(cls) -> bool:
-        return os.path.exists(PIANOTEQ_EXE)
+    def is_installed(cls) -> bool:
+        return super().is_installed(PIANOTEQ_EXE)
+    
+    @classmethod
+    def install(cls, callback = None):
+        return super().install(HOST_NAME, PIANOTEQ_EXE, progress_callback=callback)
 
     async def start(self):
         await self.jack.start()

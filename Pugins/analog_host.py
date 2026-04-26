@@ -5,6 +5,8 @@ import asyncio
 import json
 import os
 
+from plugin import Plugin
+
 HOST_NAME = "AnalogLab"
 ANALOG_EXE = r"C:\Program Files\Arturia\Analog Lab 4\Analog Lab 4.exe"
 ANALOG_PRESET_LIST = "/home/theo-rasp/Projects/VST_Host/analog_collection.json"
@@ -16,7 +18,7 @@ def get_info() -> dict:
         "stream": 0   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
     }
 
-class AnalogLab:
+class AnalogLab(Plugin):
 
     def __init__(self):
         presets = None
@@ -28,8 +30,12 @@ class AnalogLab:
         self.preset_index = 0
         
     @classmethod
-    def is_plugin_installed(cls) -> bool:
-        return os.path.exists(ANALOG_EXE)
+    def is_installed(cls) -> bool:
+        return super().is_installed(ANALOG_EXE)
+    
+    @classmethod
+    def install(cls, callback = None):
+        return super().install(HOST_NAME, ANALOG_EXE, progress_callback=callback)
 
     def get_presets(self):
         return [dict(name = p["name"]) for p in self.presets]

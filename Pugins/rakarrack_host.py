@@ -6,6 +6,7 @@ import rtmidi
 import sys
 import shutil
 
+from plugin import Plugin
 from jack_server import Jack
 
 HOST_NAME = "Rakarrack"
@@ -53,7 +54,7 @@ def get_info() -> dict:
         "stream": 1   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
     }
 
-class Rakarrack:
+class Rakarrack(Plugin):
 
     def __init__(self):
         self.process = None
@@ -64,8 +65,12 @@ class Rakarrack:
         self.midi_out = rtmidi.MidiOut()
     
     @classmethod
-    def is_plugin_installed(cls) -> bool:
-        return shutil.which(RAKARRACK_EXE)
+    def is_installed(cls) -> bool:
+        return super().is_installed(RAKARRACK_EXE)
+    
+    @classmethod
+    def install(cls, callback = None):
+        return super().install(HOST_NAME, RAKARRACK_EXE, progress_callback=callback)
 
     async def start(self):
         await self.jack.start()

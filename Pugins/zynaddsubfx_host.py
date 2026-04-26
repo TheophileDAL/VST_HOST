@@ -2,6 +2,8 @@ import subprocess
 import asyncio
 import glob
 import os
+
+from plugin import Plugin
 from jack_server import Jack
  
 from pythonosc import udp_client, dispatcher, osc_server
@@ -21,7 +23,7 @@ def get_info() -> dict:
         "stream": 0   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
     }
 
-class ZynAddSubFx:
+class ZynAddSubFx(Plugin):
 
     def __init__(self):
         # Répertoires standards de presets (.xiz = instrument, .xmz = master)
@@ -43,8 +45,12 @@ class ZynAddSubFx:
         self._osc_thread = None
         
     @classmethod
-    def is_plugin_installed(cls) -> bool:
-        return os.path.exists(ZYNC_EXE)
+    def is_installed(cls) -> bool:
+        return super().is_installed(ZYNC_EXE)
+    
+    @classmethod
+    def install(cls, callback = None):
+        return super().install(HOST_NAME, ZYNC_EXE, progress_callback=callback)
 
     async def start(self):
         await self.jack.start()

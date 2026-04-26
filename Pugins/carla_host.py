@@ -5,9 +5,10 @@ import os
 import asyncio
 
 from jack_server import Jack
+from plugin import Plugin
 
 HOST_NAME = "Carla"
-CARLA_RESSOURCES = r"/usr/share/carla/resources"
+CARLA_RESSOURCES = "/usr/share/carla/resources"
 
 def get_info() -> dict:
     return {
@@ -16,7 +17,7 @@ def get_info() -> dict:
         "stream": 0   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
     }
 
-class Carla:
+class Carla(Plugin):
 
     def __init__(self):
         sys.path.append(CARLA_RESSOURCES)
@@ -30,8 +31,12 @@ class Carla:
         self.jack = Jack()
         
     @classmethod
-    def is_plugin_installed(cls) -> bool:
-        return os.path.exists(CARLA_RESSOURCES + "/carla_backend")
+    def is_installed(cls) -> bool:
+        return super().is_installed(CARLA_RESSOURCES + "/carla_backend.py")
+    
+    @classmethod
+    def install(cls, callback = None):
+        return super().install(HOST_NAME, CARLA_RESSOURCES + "/carla_backend.py", progress_callback=callback)
 
     async def start(self):
         await self.jack.start()

@@ -3,6 +3,7 @@ import asyncio
 import requests
 import os
 
+from plugin import Plugin
 from jack_server import Jack
 
 HOST_NAME = "Guitarix"
@@ -19,7 +20,7 @@ def get_info() -> dict:
         "stream": 1   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
     }
  
-class Guitarix:
+class Guitarix(Plugin):
     def __init__(self):
         self.process = None
         self.presets = []
@@ -31,8 +32,8 @@ class Guitarix:
     # ------------------------------------------------------------------
     
     @classmethod
-    def is_plugin_installed(cls) -> bool:
-        return os.path.exists(GUITARIX_EXE)
+    def is_installed(cls) -> bool:
+        return super().is_installed(GUITARIX_EXE)
  
     async def start(self):
         await self.jack.start()
@@ -45,6 +46,10 @@ class Guitarix:
  
         await asyncio.sleep(3)
         print("Guitarix is ready")
+
+    @classmethod
+    def install(cls):
+        return super().install(HOST_NAME, GUITARIX_EXE)
  
     # ------------------------------------------------------------------
     # JSON-RPC

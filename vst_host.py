@@ -32,7 +32,7 @@ for filename in os.listdir(PLUGINS_DIR):
         continue
 
     info = module.get_info()
-    host_list[info["stream"]]["list"].append(dict(name=info["name"], list=[]))
+    host_list[info["stream"]]["list"].append(dict(name=info["name"]))
     host_classes[info["stream"]]["list"].append(info["class"])
 
 
@@ -58,7 +58,7 @@ async def main():
             if command["name"] == "load setup":
                 if host is not None:
                     await host.close()
-                    host_list[previous_stram]["list"][previous_host]["list"] = []
+                    host_list[actual_stream]["list"][actual_host]["list"] = []
                     host = None
                 
                 await asyncio.sleep(3)
@@ -67,24 +67,24 @@ async def main():
             elif command["name"] == "load host":
                 if host is not None:
                     await host.close()
-                    host_list[previous_stram]["list"][previous_host]["list"] = []
+                    host_list[actual_stream]["list"][actual_host]["list"] = []
                     host = None
                 
                 host_class = host_classes[command["stream"]]["list"][command["host"]]
                 
-                if host_class.is_plugin_installed():
-                    host = host_classes[command["stream"]]["list"][command["host"]]()
-
-                    previous_stram = command["stream"]
-                    previous_host = command["host"]
+                if host_class.is_installed():
+                    host = host_class()
                     await host.start()
 
                     preset_list = host.get_presets()
                     host_list[command["stream"]]["list"][command["host"]]["list"] = preset_list
                     await ble_command.task("set presets list", host_list)
-                    #print(data)
+
+                    actual_stream = command["stream"]
+                    actual_host = command["host"]
                 else:
                     print(host_list[command["stream"]]["list"][command["host"]]["name"] + " is not installed")
+                    await ble_command.task("set presets list", host_list)
                     
             elif command["name"] == "load preset":
                 preset_index = command["preset"]
@@ -92,13 +92,24 @@ async def main():
                 await host.load_preset(preset_index)
                 presets_info = host.get_preset_info()
                 await ble_command.task("set preset info", presets_info)
-                #print(preset_info)
 
             elif command["name"] == "set parameter":
                 host.set_parameter(command["parameter"])
                 
             elif command["name"] == "install host":
-                pass
+                host_class = host_classes[command["stream"]]["list"][command["host"]]
+                success = host_class.install(print)
+                
+                if (success):
+                    host = host_class()
+                    await host.start()
+
+                    preset_list = host.get_presets()
+                    host_list[command["stream"]]["list"][command["host"]]["list"] = preset_list
+                    await ble_command.task("set presets list", host_list)
+
+                    actual_stream = command["stream"]
+                    actual_host = command["host"]
 
             elif command["name"] == "vocal":
                 text = command["command"]
@@ -135,7 +146,6 @@ async def main():
                             
                             preset_info = host.get_preset_info()
                             await ble_command.task("set preset info", preset_info)
-                            #print(preset_info)
 
                 elif text == "précédent":
                     if host is not None:
@@ -149,12 +159,11 @@ async def main():
                             
                             preset_info = host.get_preset_info()
                             await ble_command.task("set preset info", preset_info)
-                            #print(preset_info)
 
                 elif text == "stop" or text == "stop tout" or text == "tout" or text == "c'est tout" or text == "top" or text == "top tout":
                     if (host is not None):
                         await host.close()
-                        host_list[previous_stram]["list"][previous_host]["list"] = []
+                        host_list[actual_stream]["list"][actual_host]["list"] = []
                         host = None
 
                     await ble_command.stop()

@@ -1,8 +1,0 @@
-asyncio
-pyautogui
-requests
-python-rtmidi
-python-osc
-bless
-sounddevice
-vosk

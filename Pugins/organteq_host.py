@@ -4,9 +4,10 @@ import requests
 import os
 
 from jack_server import Jack
+from plugin import Modartt
 
 HOST_NAME = "Organteq"
-ORGANTEQ_EXE = "/home/theo-rasp/Music/VST/Organteq 2/arm-64bit/Organteq 2"
+ORGANTEQ_EXE = "organteq"
 
 remote_server = '127.0.0.1:8081'
 
@@ -17,7 +18,7 @@ def get_info() -> dict:
         "stream": 0   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
     }
 
-class Organteq:
+class Organteq(Modartt):
 
     def __init__(self):
         self.process = None
@@ -26,8 +27,12 @@ class Organteq:
         self.jack = Jack()
         
     @classmethod
-    def is_plugin_installed(cls) -> bool:
-        return os.path.exists(ORGANTEQ_EXE)
+    def is_installed(cls) -> bool:
+        return super().is_installed(ORGANTEQ_EXE)
+    
+    @classmethod
+    def install(cls, callback = None):
+        return super().install(HOST_NAME, ORGANTEQ_EXE, progress_callback=callback)
 
     async def start(self):
         await self.jack.start()

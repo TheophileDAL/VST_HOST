@@ -13,27 +13,6 @@ jack_cmd = [
 ]
 
 class Jack:
-    """def __init__(self):
-        self.process = None
-
-    async def start(self):
-        self.process = await asyncio.to_thread(subprocess.Popen, jack_cmd)
-        await asyncio.sleep(2)
-
-    async def midi_connexion(self, host_midi_port):
-        await asyncio.to_thread(subprocess.run, ["jack_connect", "system:midi_capture_1", host_midi_port])
-
-    async def audio_connexion(self, host_audio_port):
-        await asyncio.to_thread(subprocess.run, ["jack_connect", "system:capture_1", host_audio_port])
-        await asyncio.to_thread(subprocess.run, ["jack_connect", "system:capture_2", host_audio_port])
-
-    def close(self):
-        if (self.process != None):
-            self.process.terminate()
-            self.process.wait()
-            self.process = None
-
-        print("Jack server stoped")"""
 
     def __init__(self):
         self.process: asyncio.subprocess.Process | None = None
