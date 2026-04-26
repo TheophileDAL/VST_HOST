@@ -2,6 +2,12 @@
 
 set -e
 
+# Vérification root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Ce script doit être exécuté en tant que root."
+    exit 1
+fi
+
 PLUGIN_NAME="Rakarrack-plus"
 TMP_DIR="/tmp"
 
@@ -9,8 +15,8 @@ echo "${PLUGIN_NAME} installation"
 
 #1.Dépendances (Debian/Ubuntu)
 echo "[+] Installation des dépendances..."
-sudo apt update
-sudo apt install -y \
+apt-get update -y
+apt-get install -y \
     git build-essential cmake \
     libfltk1.3-dev \
     libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxfixes-dev \
@@ -32,12 +38,13 @@ git clone https://github.com/Stazed/ntk-unofficial.git
 cd ntk-unofficial
 ./waf configure
 ./waf
-sudo ./waf install
+./waf install
 
 echo "Vérification de NTK..."
 if ! pkg-config --exists ntk; then
     echo "Installation de NTK..."
     apt-get install -y libntk-dev || {
+        rm -rf /tmp/ntk
         git clone https://github.com/linuxaudio/ntk.git /tmp/ntk
         cd /tmp/ntk
         ./waf configure && ./waf && ./waf install
@@ -69,9 +76,9 @@ make -j$(nproc)
 
 #5.Installation
 echo "[+] Installation..."
-sudo make install
+make install
 
 #6.Rafraichissement cache
-sudo ldconfig
+ldconfig
 
 echo "${PLUGIN_NAME} is succesfully installed"

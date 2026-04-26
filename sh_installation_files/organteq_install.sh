@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Vérification root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Ce script doit être exécuté en tant que root."
+    exit 1
+fi
+
 PLUGIN_NAME="Organteq"
 DOWNLOAD_PATH="$1"   # chemin du .7z déjà téléchargé par Python
 INSTALL_DIR="/opt/organteq"
@@ -21,17 +27,17 @@ apt-get install -y p7zip-full
 
 echo "Extraction de l'archive..."
 mkdir -p "$INSTALL_DIR"
-7z x "$DOWNLOAD_PATH" -o"$INSTALL_DIR"
+7z x -y "$DOWNLOAD_PATH" -o"$INSTALL_DIR"
 
-if [ -d "/usr/local/bin/organteq" ]; then
-    echo "[!] Existing directory found, removing..."
-    rm -rf "/usr/local/bin/organteq"
+if [ -L "/usr/local/bin/organteq" ]; then
+    echo "[!] Existing symlink found, removing..."
+    rm -f "/usr/local/bin/organteq"
 fi
 
 echo "Création du lien symbolique..."
 ln -sf "$INSTALL_DIR/Organteq 2/arm-64bit/Organteq 2" /usr/local/bin/organteq
 
 echo "Nettoyage..."
-rm "$DOWNLOAD_PATH"
+rm -f "$DOWNLOAD_PATH"
 
 echo "${PLUGIN_NAME} is succesfully installed"

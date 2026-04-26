@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Vérification root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Ce script doit être exécuté en tant que root."
+    exit 1
+fi
+
 PLUGIN_NAME="Carla"
 DOWNLOAD_PATH="/tmp/kxstudio-repos.deb"
 PACKAGE_URL="https://launchpad.net/~kxstudio-debian/+archive/kxstudio/+files/kxstudio-repos_11.2.0_all.deb"
@@ -19,8 +25,11 @@ wget -4 -q -O "$DOWNLOAD_PATH" "$PACKAGE_URL"
 # Install it
 dpkg -i "$DOWNLOAD_PATH"
 
-#Carla installation
-apt install -y carla
+# Mise à jour après ajout du repo KXStudio
+apt-get update -y
+
+# Carla installation
+apt-get install -y carla
 
 echo "Nettoyage..."
 rm -f "$DOWNLOAD_PATH"

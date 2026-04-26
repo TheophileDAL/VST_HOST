@@ -2,6 +2,12 @@
 
 set -e
 
+# Vérification root
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Ce script doit être exécuté en tant que root."
+    exit 1
+fi
+
 PLUGIN_NAME="Guitarix"
 echo "${PLUGIN_NAME} installation"
 
@@ -13,8 +19,8 @@ INSTALL_PREFIX="/opt"
 #1.Dépendances
 echo "[+] Installing dependencies..."
 
-sudo apt update
-sudo apt install -y \
+apt-get update -y
+apt-get install -y \
     git build-essential pkg-config \
     python3 gettext intltool sassc \
     liblrdf-dev \
@@ -39,7 +45,6 @@ sudo apt install -y \
     libavahi-client-dev \
     libcairo2-dev \
     libx11-dev \
-    libavahi-client-dev \
     libavahi-gobject-dev
 
 #2.Préparation dossier temporaire
@@ -70,17 +75,17 @@ cd trunk
 echo "[+] Configuring (waf)..."
 ./waf configure --prefix="$INSTALL_PREFIX" --includeresampler --includeconvolver --optimization
 
-sudo mkdir -p /usr/include/lv2/lv2plug.in/ns/ext
-sudo mkdir -p /usr/include/lv2/lv2plug.in/ns/extensions
+mkdir -p /usr/include/lv2/lv2plug.in/ns/ext
+mkdir -p /usr/include/lv2/lv2plug.in/ns/extensions
 
 for dir in /usr/include/lv2/*/; do
     name=$(basename "$dir")
-    sudo ln -sf "$dir" "/usr/include/lv2/lv2plug.in/ns/extensions/$name"
+    ln -sf "$dir" "/usr/include/lv2/lv2plug.in/ns/extensions/$name"
 done
 
 for dir in /usr/include/lv2/*/; do
     name=$(basename "$dir")
-    sudo ln -sf "$dir" "/usr/include/lv2/lv2plug.in/ns/ext/$name"
+    ln -sf "$dir" "/usr/include/lv2/lv2plug.in/ns/ext/$name"
 done
 
 #5.Compilation
@@ -89,9 +94,9 @@ echo "[+] Building..."
 
 #6.Installation
 echo "[+] Installing..."
-sudo ./waf install
+./waf install
 
 #7.Refresh libs
-sudo ldconfig
+ldconfig
 
 echo "${PLUGIN_NAME} is succesfully installed"
