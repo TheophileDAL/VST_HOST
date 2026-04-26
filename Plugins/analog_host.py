@@ -11,7 +11,8 @@ from plugin import Plugin
 
 HOST_NAME = "AnalogLab"
 ANALOG_EXE = r"C:\Program Files\Arturia\Analog Lab 4\Analog Lab 4.exe"
-ANALOG_PRESET_LIST = "/home/theo-rasp/Projects/VST_Host/analog_collection.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ANALOG_PRESET_LIST = "analog_collection.json"
 
 def get_info() -> dict:
     return {
@@ -25,7 +26,9 @@ class AnalogLab(Plugin):
 
     def __init__(self):
         presets = None
-        with open(ANALOG_PRESET_LIST, 'r', encoding='utf-8') as fichier:
+        preset_list_path = os.path.join(BASE_DIR, "..", ANALOG_PRESET_LIST)
+        preset_list_path = os.path.abspath(preset_list_path)
+        with open(preset_list_path, 'r', encoding='utf-8') as fichier:
             presets = json.load(fichier)
         
         self.process = None

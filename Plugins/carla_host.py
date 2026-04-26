@@ -9,6 +9,8 @@ from plugin import Plugin
 
 HOST_NAME = "Carla"
 CARLA_RESSOURCES = "/usr/share/carla/resources"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CARLA_PRESETS_DIR = "Presets/Carla"
 
 def get_info() -> dict:
     return {
@@ -24,7 +26,10 @@ class Carla(Plugin):
         sys.path.append(CARLA_RESSOURCES)
         import carla_backend
         self.backend = carla_backend
-        self.presets_path = "/home/theo-rasp/Music/PRESETS/"
+        
+        presets_path = os.path.join(BASE_DIR, "..", CARLA_PRESETS_DIR)
+        self.presets_path = os.path.abspath(presets_path)
+        
         presets = os.listdir(self.presets_path)
         self.presets = [preset.removesuffix(".carxp") for preset in presets]
         self.process = None

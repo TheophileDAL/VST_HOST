@@ -11,6 +11,7 @@ from pythonosc.osc_message_builder import OscMessageBuilder
 
 HOST_NAME = "ZynAddSubFx"
 ZYNC_EXE = "/usr/bin/zynaddsubfx"
+ZYNC_PRESETS_DIR = "/usr/share/zynaddsubfx/banks"
 
 ZYNC_OSC_PORT = 17961       # port OSC d'entrée de ZynAddSubFX
 ZYNC_OSC_HOST = "127.0.0.1"
@@ -28,7 +29,7 @@ class ZynAddSubFx(Plugin):
 
     def __init__(self):
         # Répertoires standards de presets (.xiz = instrument, .xmz = master)
-        self.presets_dir = "/usr/share/zynaddsubfx/banks"
+        self.presets_dir = ZYNC_PRESETS_DIR
  
         self.process: asyncio.subprocess.Process | None = None
         self.presets = []
