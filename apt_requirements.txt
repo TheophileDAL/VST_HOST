@@ -5,3 +5,4 @@ libffi-dev
 cmake
 build-essential
 python3-dev
+libportaudio2

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.5'>
+ <EngineSettings>
+  <ForceStereo>true</ForceStereo>
+  <PreferPluginBridges>false</PreferPluginBridges>
+  <PreferUiBridges>true</PreferUiBridges>
+  <UIsAlwaysOnTop>false</UIsAlwaysOnTop>
+  <MaxParameters>200</MaxParameters>
+  <UIBridgesTimeout>4000</UIBridgesTimeout>
+ </EngineSettings>
+
+ <Transport>
+  <BeatsPerMinute>120</BeatsPerMinute>
+ </Transport>
+
+ <!-- Nekobi -->
+ <Plugin>
+  <Info>
+   <Type>VST2</Type>
+   <Name>Nekobi</Name>
+   <Binary>/home/theo-rasp/Music/VST/zynthian-plugins/vst/Nekobi-vst.so</Binary>
+   <UniqueID>1145988459</UniqueID>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x3f1</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Waveform</Name>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Tuning</Name>
+    <Value>0.5</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Cutoff</Name>
+    <Value>0.25</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>VCF Resonance</Name>
+    <Value>0.263157904148102</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Env Mod</Name>
+    <Value>0.5</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Decay</Name>
+    <Value>0.75</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Accent</Name>
+    <Value>0.25</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Volume</Name>
+    <Value>0.75</Value>
+   </Parameter>
+  </Data>
+ </Plugin>
+
+ <ExternalPatchbay>
+  <Connection>
+   <Source>system:midi_capture_1</Source>
+   <Target>Nekobi:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>Nekobi:output</Source>
+   <Target>system:playback_1</Target>
+  </Connection>
+  <Connection>
+   <Source>Nekobi:output</Source>
+   <Target>system:playback_2</Target>
+  </Connection>
+  <Positions>
+   <Position x1="1378" y1="1206">
+    <Name>Carla</Name>
+   </Position>
+   <Position x1="1092" y1="1171" x2="1729" y2="1195">
+    <Name>system</Name>
+   </Position>
+  </Positions>
+ </ExternalPatchbay>
+</CARLA-PROJECT>

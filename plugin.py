@@ -179,7 +179,7 @@ class Modartt(Plugin):
             download_path = cls.download(download_file, progress_callback)
             print(download_path)
 
-            super().install(plugin_name, command, [download_path], print)
+            return super().install(plugin_name, command, [download_path], print)
 
         except Exception as e:
             raise RuntimeError(f"Erreur : {str(e)}")

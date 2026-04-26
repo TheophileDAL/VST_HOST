@@ -5,6 +5,7 @@ import json
 import rtmidi
 import sys
 import shutil
+import os
 
 from plugin import Plugin
 from jack_server import Jack
