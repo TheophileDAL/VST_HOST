@@ -1,10 +1,19 @@
 import asyncio
 import importlib.util
 import os
+import argparse
 
 from vocal_command import VocalCommand
 from ble_command import BleCommand
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--vc", help="--enable_vocal_commands" action="store_true")
+args = parser.parse_args()
+
+if args.vc:
+    enable_vc = True
+else:
+    enable_vc = False
 
 host_list = []
 host_list.append(dict(name = "Midi", list = []))
@@ -45,9 +54,10 @@ async def main():
     host = None
 
     commands = asyncio.Queue()
-
-    vocal = VocalCommand(commands_queue=commands)
-    vocal_task = asyncio.create_task(vocal.listen())
+    
+    if enable_vc == True:
+        vocal = VocalCommand(commands_queue=commands)
+        vocal_task = asyncio.create_task(vocal.listen())
 
     ble_command = BleCommand(commands_queue=commands)
     await ble_command.configure()
@@ -173,7 +183,8 @@ async def main():
                         break
 
     finally:
-        vocal_task.cancel()
-        await asyncio.gather(vocal_task, return_exceptions=True)
+        if enable_vc == True:
+            vocal_task.cancel()
+            await asyncio.gather(vocal_task, return_exceptions=True)
 
 asyncio.run(main())
