@@ -39,11 +39,12 @@ PRESET_FORMAT = (
 )
 
 PRESET_SIZE = struct.calcsize(PRESET_FORMAT)
-
 BANK_SIZE = PRESET_SIZE * NUM_PRESETS
-BANKS_PATH = "/home/theo-rasp/Music/VST/rakarrack-plus/data/"
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BANKS_PATH = "/usr/local/share/rakarrack-plus/"
 BANKS_LIST = ["Default", "Extra", "Extra1"]
-MIDI_PRESETS_TABLE = "/home/theo-rasp/Music/VST/rakarrack-plus/Settings/Preferences/User/midi_table.rmt"
+MIDI_PRESETS_TABLE = "Rakarrack/Settings/Preferences/User/midi_table.rmt"
 MIDI_PORT_NAME = "rakarrack-plus:rakarrack-plus IN 130:0"
 
 
@@ -61,7 +62,7 @@ class Rakarrack(Plugin):
         self.process = None
         self.banks = []
         self.presets = []
-        self.preset_index = 0
+        self.preset_index = [0, 0]
         self.jack = Jack()
         self.midi_out = rtmidi.MidiOut()
     
@@ -180,17 +181,29 @@ class Rakarrack(Plugin):
         return self.presets
         
     def get_preset_info(self):
-        presets = None
-        param_path = "/home/theo-rasp/Projects/VST_Host/analog_collection.json"
-        with open(param_path, 'r', encoding='utf-8') as fichier:
-            presets = json.load(fichier)
-        return presets[self.preset_index]
+        parameters = []
+        
+        preset_name = self.presets[self.preset_index[0]]["list"][self.preset_index[1]]["name"]
+    
+        plugins_info = [dict(
+            name=preset_name,
+            id=0,
+            param_count=len(parameters),
+            parameters=parameters,
+        )]
+ 
+        return dict(
+            name=preset_name,
+            plugin_count=1,
+            plugins=plugins_info,)
 
     async def load_preset(self, index):
         channel = 0
         preset_midi_num = (index[0] * len(self.presets[index[0]]["list"])) + index[1]
         program_change = [0xC0 | (channel & 0x0F), preset_midi_num & 0x7F]
         self.midi_out.send_message(program_change)
+        
+        self.preset_index = index
 
     def set_parameter(self, json_data):
         print("under development")

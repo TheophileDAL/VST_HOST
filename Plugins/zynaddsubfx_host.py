@@ -33,7 +33,7 @@ class ZynAddSubFx(Plugin):
  
         self.process: asyncio.subprocess.Process | None = None
         self.presets = []
-        self.preset_index = 0
+        self.preset_index = [0, 0]
         self.jack = Jack()
  
         # Client OSC pour envoyer des messages ZynAddSubFX
