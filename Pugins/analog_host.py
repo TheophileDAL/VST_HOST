@@ -1,9 +1,11 @@
 import subprocess
 import time
-import pyautogui
 import asyncio
 import json
 import os
+
+if os.environ.get('DISPLAY') is not None:
+    import pyautogui
 
 from plugin import Plugin
 
@@ -16,6 +18,7 @@ def get_info() -> dict:
         "name":     HOST_NAME,
         "class":    AnalogLab,
         "stream": 0   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
+        "gui": True # gui needed to use this plugin
     }
 
 class AnalogLab(Plugin):

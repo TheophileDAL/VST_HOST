@@ -52,6 +52,7 @@ def get_info() -> dict:
         "name":     HOST_NAME,
         "class":    Rakarrack,
         "stream": 1   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
+        "gui": False # no gui needed to use this plugin
     }
 
 class Rakarrack(Plugin):
