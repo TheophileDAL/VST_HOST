@@ -53,7 +53,7 @@ class VocalCommand:
             print("[VocalCommand] Stream audio arrété.")
 
     def _normalize(self, text: str) -> str:
-        """Normalise le texte pour gérer les probl�émes d'encodage."""
+        """Normalise le texte pour gérer les problèmes d'encodage."""
         replacements = {
             "précédent": "précédent",
             "précédent": "précédent",

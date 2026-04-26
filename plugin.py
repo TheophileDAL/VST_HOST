@@ -4,7 +4,8 @@ import subprocess
 import requests
 import re
 
-INSTALL_SCRIPT_DIR = "/home/theo-rasp/Projects/VST_Host/sh_installation_files"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+INSTALL_SCRIPT_DIR = "sh_installation_files"
 
 class Plugin:
     @classmethod
@@ -23,8 +24,8 @@ class Plugin:
             if progress_callback:
                 progress_callback(f"ALREADY_INSTALLED:{message}")
             return False
-
-        script_path = os.path.join(INSTALL_SCRIPT_DIR, plugin_name.lower() + "_install.sh")
+            
+        script_path = os.path.join(BASE_DIR, INSTALL_SCRIPT_DIR, plugin_name.lower() + "_install.sh")
 
         if not os.path.exists(script_path):
             raise FileNotFoundError(f"Script introuvable : {script_path}")

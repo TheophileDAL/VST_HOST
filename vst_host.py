@@ -23,7 +23,8 @@ host_classes = []
 host_classes.append(dict(name = "Midi", list = []))
 host_classes.append(dict(name = "Audio", list = []))
 
-PLUGINS_DIR = "/home/theo-rasp/Projects/VST_Host/Pugins"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PLUGINS_DIR = os.path.join(BASE_DIR, "Plugins")
 
 for filename in os.listdir(PLUGINS_DIR):
     if not filename.endswith(".py"):

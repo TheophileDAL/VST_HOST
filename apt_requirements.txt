@@ -1,3 +1,4 @@
+python3-pip
 jackd2
 libjack-jackd2-dev
 libffi-dev
