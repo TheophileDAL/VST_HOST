@@ -23,7 +23,10 @@ echo "Extraction de l'archive..."
 mkdir -p "$INSTALL_DIR"
 7z x "$DOWNLOAD_PATH" -o"$INSTALL_DIR"
 
-rm "/usr/local/bin/organteq"
+if [ -d "/usr/local/bin/organteq" ]; then
+    echo "[!] Existing directory found, removing..."
+    rm -rf "/usr/local/bin/organteq"
+fi
 
 echo "Création du lien symbolique..."
 ln -sf "$INSTALL_DIR/Organteq 2/arm-64bit/Organteq 2" /usr/local/bin/organteq

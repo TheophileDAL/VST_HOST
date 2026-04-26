@@ -24,7 +24,10 @@ mkdir -p "$INSTALL_DIR"
 sudo chown $USER:$USER /opt/pianoteq
 tar -xf "$DOWNLOAD_PATH" -C "$INSTALL_DIR"
 
-rm -f "/usr/local/bin/pianoteq"
+if [ -d "/usr/local/bin/pianoteq" ]; then
+    echo "[!] Existing directory found, removing..."
+    rm -rf "/usr/local/bin/pianoteq"
+fi
 
 echo "Création du lien symbolique..."
 ln -sf "$INSTALL_DIR/Pianoteq 9/arm-64bit/Pianoteq 9" /usr/local/bin/pianoteq

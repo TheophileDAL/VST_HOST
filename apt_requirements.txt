@@ -1,0 +1,6 @@
+jackd2
+libjack-jackd2-dev
+libffi-dev
+cmake
+build-essential
+python3-dev
