@@ -17,7 +17,7 @@ def get_info() -> dict:
     return {
         "name":     HOST_NAME,
         "class":    AnalogLab,
-        "stream": 0   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
+        "stream": 0,   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
         "gui": True # gui needed to use this plugin
     }
 

@@ -15,7 +15,7 @@ def get_info() -> dict:
     return {
         "name":     HOST_NAME,
         "class":    Organteq,
-        "stream": 0   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
+        "stream": 0,   # 0 = MIDI, 1 = AUDIO, 2 = BOTH
         "gui": False # no gui needed to use this plugin
     }
 
