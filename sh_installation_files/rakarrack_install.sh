@@ -24,7 +24,8 @@ apt-get install -y \
     libfftw3-dev liblo-dev \
     libasound2-dev jackd2 libjack-jackd2-dev \
     lv2-dev \
-    libxpm-dev
+    libxpm-dev \
+    libcairo2-dev
 
 cd "$TMP_DIR"
 

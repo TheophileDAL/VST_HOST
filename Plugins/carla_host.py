@@ -92,7 +92,7 @@ class Carla(Plugin):
             self.process.engine_init("JACK", "carla-python")
             await asyncio.sleep(1)
             
-        self.process.load_project(self.presets_path + self.presets[index[0]] + ".carxp")
+        self.process.load_project(os.path.join(self.presets_path, self.presets[index[0]] + ".carxp"))
         await asyncio.sleep(1)
         self.preset_index = index[0]
 
