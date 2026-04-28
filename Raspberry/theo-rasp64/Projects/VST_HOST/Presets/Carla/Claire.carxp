@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.5'>
+ <EngineSettings>
+  <ForceStereo>true</ForceStereo>
+  <PreferPluginBridges>false</PreferPluginBridges>
+  <PreferUiBridges>true</PreferUiBridges>
+  <UIsAlwaysOnTop>false</UIsAlwaysOnTop>
+  <MaxParameters>200</MaxParameters>
+  <UIBridgesTimeout>4000</UIBridgesTimeout>
+ </EngineSettings>
+
+ <Transport>
+  <BeatsPerMinute>120</BeatsPerMinute>
+ </Transport>
+
+ <!-- claire -->
+ <Plugin>
+  <Info>
+   <Type>SFZ</Type>
+   <Name>claire</Name>
+   <Filename>/home/theo-rasp/Music/VST/Claire-Kontakt/claire.sfz</Filename>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x1f0</Options>
+  </Data>
+ </Plugin>
+
+ <ExternalPatchbay>
+  <Connection>
+   <Source>system:midi_capture_1</Source>
+   <Target>claire:events-in</Target>
+  </Connection>
+  <Connection>
+   <Source>claire:out-left</Source>
+   <Target>system:playback_1</Target>
+  </Connection>
+  <Connection>
+   <Source>claire:out-right</Source>
+   <Target>system:playback_2</Target>
+  </Connection>
+  <Positions>
+   <Position x1="1378" y1="1206">
+    <Name>Carla</Name>
+   </Position>
+   <Position x1="1092" y1="1171" x2="1729" y2="1195">
+    <Name>system</Name>
+   </Position>
+   <Position x1="1407" y1="1152" pluginId="0">
+    <Name>claire</Name>
+   </Position>
+  </Positions>
+ </ExternalPatchbay>
+</CARLA-PROJECT>
