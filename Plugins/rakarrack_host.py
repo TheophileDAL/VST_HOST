@@ -12,8 +12,8 @@ from jack_server import Jack
 
 HOST_NAME = "Rakarrack"
 RAKARRACK_EXE = "rakarrack-plus"
-env = os.environ.copy()
-env["DISPLAY"] = ":0"
+ENV = os.environ.copy()
+ENV["DISPLAY"] = ":0"
 
 # Constantes
 C_MAX_EFFECTS = 70
@@ -79,8 +79,18 @@ class Rakarrack(Plugin):
 
     async def start(self):
         await self.jack.start()
-        self.process = subprocess.Popen([RAKARRACK_EXE, "--no-gui"], env=env)
+        
+        #virtual X11 server for rakarrack (didn't work without)
+        self.xvfb = subprocess.Popen(
+            ["Xvfb", ":0", "-screen", "0", "1024x768x24"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        await asyncio.sleep(1)
+        
+        self.process = subprocess.Popen([RAKARRACK_EXE, "--no-gui"], env=ENV)
         await asyncio.sleep(10)
+        
         self.midi_out = rtmidi.MidiOut()
         await self.jack.audio_connexion("rakarrack-plus:in_1")
         await self.jack.audio_connexion("rakarrack-plus:in_2")

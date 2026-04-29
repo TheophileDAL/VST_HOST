@@ -26,7 +26,8 @@ apt-get install -y \
     lv2-dev \
     libxpm-dev \
     libcairo2-dev \
-    libzita-resampler-dev
+    libzita-resampler-dev \
+    xvfb
 
 cd "$TMP_DIR"
 
