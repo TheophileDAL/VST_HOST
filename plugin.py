@@ -36,7 +36,7 @@ class Plugin:
         os.chmod(script_path, 0o755)
 
         process = subprocess.Popen(
-            ["sudo", "bash", script_path] + install_script_args,
+            ["sudo", "/bin/bash", script_path] + install_script_args,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True

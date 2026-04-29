@@ -47,6 +47,7 @@ Group=audio
 Environment=HOME=/home/$CURRENT_USER
 Environment=XDG_RUNTIME_DIR=/run/user/$USER_ID
 Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus
+Environment=QT_QPA_PLATFORM=offscreen
 LimitRTPRIO=95
 LimitMEMLOCK=infinity
 ExecStart=python3 $ACTUAL_DIR/vst_host.py

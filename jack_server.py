@@ -23,6 +23,7 @@ class Jack:
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
         )
+        await asyncio.sleep(3)
         print("[JACK SERVER] started")
 
     async def _get_jack_ports(self):
