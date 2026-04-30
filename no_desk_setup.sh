@@ -3,7 +3,7 @@
 # Installation des dépendances
 source install.sh
  
-ACTUAL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VST_HOST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
  
 # Détecte automatiquement l'utilisateur réel
 if [ "$SUDO_USER" ]; then
@@ -15,7 +15,8 @@ else
 fi
  
 SERVICE_FILE=/etc/systemd/system/vst_host.service
-INSTALL_DIR=$ACTUAL_DIR/sh_installations_file
+INSTALL_DIR=$VST_HOST_DIR/sh_installations_file
+SUDOERS_FILE=/etc/sudoers.d/vst_host
  
 # Autoriser tous les scripts d'installation sans mot de passe
 echo "=== Configuration des droits sudo pour les scripts d'installation ==="
@@ -50,10 +51,10 @@ Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$USER_ID/bus
 Environment=QT_QPA_PLATFORM=offscreen
 LimitRTPRIO=95
 LimitMEMLOCK=infinity
-ExecStart=python3 $ACTUAL_DIR/vst_host.py
+ExecStart=python3 $VST_HOST_DIR/vst_host.py
 Restart=on-failure
-StandardOutput=append:$ACTUAL_DIR/vst_host.log
-StandardError=append:$ACTUAL_DIR/vst_host.log
+StandardOutput=append:$VST_HOST_DIR/vst_host.log
+StandardError=append:$VST_HOST_DIR/vst_host.log
  
 [Install]
 WantedBy=multi-user.target
