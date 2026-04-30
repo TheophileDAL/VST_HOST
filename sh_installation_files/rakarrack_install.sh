@@ -75,14 +75,11 @@ ln -sf /usr/include/lv2/core/lv2.h /usr/include/lv2/lv2plug.in/ns/lv2core/lv2.h
 
 for dir in /usr/include/lv2/*/; do
     name=$(basename "$dir")
+    # Ignore lv2plug.in pour éviter la récursion
+    [ "$name" = "lv2plug.in" ] && continue
+    ln -sf "$dir" "/usr/include/lv2/lv2plug.in/ns/ext/$name"
     ln -sf "$dir" "/usr/include/lv2/lv2plug.in/ns/extensions/$name"
 done
-
-for dir in /usr/include/lv2/*/; do
-    name=$(basename "$dir")
-    ln -sf "$dir" "/usr/include/lv2/lv2plug.in/ns/ext/$name"
-done
-
 
 #4.Compilation
 echo "[+] Compilation..."
