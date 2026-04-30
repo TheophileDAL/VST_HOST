@@ -19,10 +19,10 @@ INSTALL_DIR=$ACTUAL_DIR/sh_installations_file
  
 # Autoriser tous les scripts d'installation sans mot de passe
 echo "=== Configuration des droits sudo pour les scripts d'installation ==="
-SUDOERS_LINE="$CURRENT_USER ALL=(ALL) NOPASSWD: /bin/bash $INSTALL_DIR/*.sh"
-SUDOERS_FILE=/etc/sudoers.d/vst_host
- 
-echo "$SUDOERS_LINE" | sudo tee $SUDOERS_FILE > /dev/null
+cat << EOF | sudo tee $SUDOERS_FILE > /dev/null
+Defaults:$CURRENT_USER !requiretty
+$CURRENT_USER ALL=(ALL) NOPASSWD: /bin/bash $INSTALL_DIR/*.sh *
+EOF
 sudo chmod 440 $SUDOERS_FILE
 echo "    Droits configurés dans $SUDOERS_FILE"
  
@@ -34,7 +34,7 @@ fi
  
 echo "=== Création du service systemd ==="
  
-sudo bash -c "cat > $SERVICE_FILE" << EOF
+cat << EOF | sudo tee $SERVICE_FILE > /dev/null
 [Unit]
 Description=VST Host
 After=multi-user.target bluetooth.target sound.target
