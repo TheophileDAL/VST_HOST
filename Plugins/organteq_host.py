@@ -72,7 +72,8 @@ class Organteq(Modartt):
         if presets is not None:
             presets = self.rpc("getListOfPresets")["result"]
             self.presets = [p["name"] for p in presets]
-        return [dict(name = preset) for preset in self.presets]
+            return [dict(name = preset) for preset in self.presets]
+        return []
         
     def get_preset_info(self):
         gross_parameters = self.rpc("getParameters")
