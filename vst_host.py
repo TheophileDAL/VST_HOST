@@ -5,6 +5,7 @@ import argparse
 
 from vocal_command import VocalCommand
 from ble_command import BleCommand
+from audio import Audio
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--vc", help="enable vocal commands", action="store_true")
@@ -63,6 +64,8 @@ async def main():
     ble_command = BleCommand(commands_queue=commands)
     await ble_command.configure()
     await ble_command.start()
+
+    audio = Audio()
     
     try:
         while True:
@@ -85,7 +88,7 @@ async def main():
                 host_class = host_classes[command["stream"]]["list"][command["host"]]
                 
                 if host_class.is_installed():
-                    host = host_class()
+                    host = host_class(audio)
                     await host.start()
 
                     preset_list = host.get_presets()
@@ -113,7 +116,7 @@ async def main():
                 success = host_class.install(print)
                 
                 if (success):
-                    host = host_class()
+                    host = host_class(audio)
                     await host.start()
 
                     preset_list = host.get_presets()
@@ -130,8 +133,8 @@ async def main():
 
                     await ble_command.task("set presets list", host_list)
 
-                    host = Carla()
-                    previous_host = 0
+                    host = host_classes[0]["list"][0](audio)
+                    actual_host = 0
                     await host.start()
 
                     presets_list = host.get_presets()

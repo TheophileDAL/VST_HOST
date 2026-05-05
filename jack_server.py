@@ -1,12 +1,10 @@
 #JACK SERVER COMMAND FOR I/O
 import asyncio
-import subprocess
+from audio import Audio
 
-jack_cmd = [
+JACK_COMMAND = [
     "jackd",
     "-d", "alsa",      # driver ALSA
-    "-d", "hw:USB",    # carte son USB
-    "-r", "48000",     # échantillonnage 48 kHz
     "-p", "1024",      # taille du buffer
     "-n", "2",         # nombre de buffers
     "-X", "raw"        # mode MIDI RAW
@@ -14,10 +12,22 @@ jack_cmd = [
 
 class Jack:
 
-    def __init__(self):
+    def __init__(self, audio : Audio):
         self.process: asyncio.subprocess.Process | None = None
+        self.audio = audio
 
     async def start(self):
+        device = self.audio.getOutputDevice()
+
+        if device is not None:
+            jack_cmd = JACK_COMMAND.copy()
+            jack_cmd.extend(["-d", "hw:"+str(device["hw"]), "-r", str(device["samplerate"])])
+        else:
+            jack_cmd = ["jackd", "-d", "dummy"]
+
+        print(JACK_COMMAND)
+        print(jack_cmd)
+
         self.process = await asyncio.create_subprocess_exec(
             *jack_cmd,
             stdout=asyncio.subprocess.PIPE,

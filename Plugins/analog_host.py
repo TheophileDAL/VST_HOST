@@ -8,6 +8,7 @@ if os.environ.get('DISPLAY') is not None:
     import pyautogui
 
 from plugin import Plugin
+from audio import Audio
 
 HOST_NAME = "AnalogLab"
 ANALOG_EXE = r"C:\Program Files\Arturia\Analog Lab 4\Analog Lab 4.exe"
@@ -24,7 +25,7 @@ def get_info() -> dict:
 
 class AnalogLab(Plugin):
 
-    def __init__(self):
+    def __init__(self, audio : Audio):
         presets = None
         preset_list_path = os.path.join(BASE_DIR, "..", ANALOG_PRESET_LIST)
         preset_list_path = os.path.abspath(preset_list_path)

@@ -6,6 +6,7 @@ import asyncio
 
 from jack_server import Jack
 from plugin import Plugin
+from audio import Audio
 
 HOST_NAME = "Carla"
 CARLA_RESSOURCES = "/usr/share/carla/resources"
@@ -22,7 +23,7 @@ def get_info() -> dict:
 
 class Carla(Plugin):
 
-    def __init__(self):
+    def __init__(self, audio : Audio):
         sys.path.append(CARLA_RESSOURCES)
         import carla_backend
         self.backend = carla_backend
@@ -34,7 +35,7 @@ class Carla(Plugin):
         self.presets = [preset.removesuffix(".carxp") for preset in presets]
         self.process = None
         self.preset_index = 0
-        self.jack = Jack()
+        self.jack = Jack(audio)
         
     @classmethod
     def is_installed(cls) -> bool:
