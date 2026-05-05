@@ -5,5 +5,5 @@ import pyaudio
 class Audio:
 
     def __init__(self):
-        #changement
+        #modif from raspberry
         pass
