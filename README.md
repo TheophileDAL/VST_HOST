@@ -66,7 +66,6 @@ sudo python3 vst_host.py --vc #to enable vocal commands if you have a microphone
 **You need to be in root mode if you count to install plugins by using VST_HOST with the app**
 
 
-##  VST_HOST App    
+##  iOS App    
 
-Only available for iOS
 Soon in the app store...
