@@ -5,13 +5,13 @@ List of available plugins for the moment:
 
 | Plugins                | Descriptions | Links |
 | ---------------------- | ------------ | ----- |
-| Carla ######MIDI & Audio   | Host for LADSPA, DSSI, LV2 and VST plugins by KXStudio| https://kx.studio/Applications:Carla |
-| Organteq ######MIDI        | Virtual organs collection plugin by Modartt *(demo version only)*| https://www.modartt.com/organteq_overview?ref=cGFnZT1vcmdhbnRlcSZleHQ9 |
-| Pianoteq ######MIDI        | Virtual pianos collection plugin by Modartt *(demo version only)*| https://www.modartt.com/pianoteq_overview?ref=cGFnZT1waWFub3RlcSZleHQ9 |
-| ZynAddSubFx ######MIDI     | Synthesizer software capable of making a countless number of instruments | https://zynaddsubfx.sourceforge.io/ |
-| Analog Lab 4 ######MIDI    | VST collection plugin by Arturia *(run on raspberry via wine and box64 and with a desktop OS version only / work well with no CPU-intensive VST)*| https://www.arturia.com/fr/products/software-instruments/analoglab/overview |
-| Guitarix ######Audio       | Virtual guitar amplifier plugin | https://guitarix.org/ |
-| Rakarrack-Plus ######Audio | Virtual guitar effects pedalboard plugin | https://rakarrack.sourceforge.net/ |
+| Carla `(MIDI & Audio)`   | Host for LADSPA, DSSI, LV2 and VST plugins by KXStudio| https://kx.studio/Applications:Carla |
+| Organteq `(MIDI)`        | Virtual organs collection plugin by Modartt *(demo version only)*| https://www.modartt.com/organteq_overview?ref=cGFnZT1vcmdhbnRlcSZleHQ9 |
+| Pianoteq `(MIDI)`        | Virtual pianos collection plugin by Modartt *(demo version only)*| https://www.modartt.com/pianoteq_overview?ref=cGFnZT1waWFub3RlcSZleHQ9 |
+| ZynAddSubFx `(MIDI)`     | Synthesizer software capable of making a countless number of instruments | https://zynaddsubfx.sourceforge.io/ |
+| Analog Lab 4 `(MIDI)`    | VST collection plugin by Arturia *(run on raspberry via wine and box64 and with a desktop OS version only / work well with no CPU-intensive VST)*| https://www.arturia.com/fr/products/software-instruments/analoglab/overview |
+| Guitarix `(Audio)`       | Virtual guitar amplifier plugin | https://guitarix.org/ |
+| Rakarrack-Plus `(Audio)` | Virtual guitar effects pedalboard plugin | https://rakarrack.sourceforge.net/ |
 
 
 If you don't find the plugin you looking for, you can add its class file in the "Plugins" folder by referring to the other plugin classes and your plugin's API (like MIDI, OSC, JSON-RPC... if it has one).
