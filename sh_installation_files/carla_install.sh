@@ -14,7 +14,7 @@ PACKAGE_URL="https://launchpad.net/~kxstudio-debian/+archive/kxstudio/+files/kxs
 echo "${PLUGIN_NAME} installation"
 
 echo "Mise à jour des paquets..."
-apt-get update -y
+apt update -y
 
 # Install required dependencies
 apt-get install -y gpgv wget
@@ -26,10 +26,10 @@ wget -4 -q -O "$DOWNLOAD_PATH" "$PACKAGE_URL"
 dpkg -i "$DOWNLOAD_PATH"
 
 # Mise à jour après ajout du repo KXStudio
-apt-get update -y
+apt update -y
 
 # Carla installation
-apt-get install -y carla
+apt install -y carla
 
 echo "Nettoyage..."
 rm -f "$DOWNLOAD_PATH"

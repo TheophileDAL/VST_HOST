@@ -8,6 +8,8 @@ presets_uuid = "d98c8811-876b-4516-988c-28c7384a33cc"
 selected_preset_uuid = "d98c8812-876b-4516-988c-28c7384a33cc"
 preset_info_uuid = "d98c8813-876b-4516-988c-28c7384a33cc"
 change_param_uuid = "d98c8814-876b-4516-988c-28c7384a33cc"
+settings_uuid = "d98c8815-876b-4516-988c-28c7384a33cc"
+settings_update_uuid = "d98c8816-876b-4516-988c-28c7384a33cc"
 
 class BleCommand:
     def __init__(self, commands_queue: asyncio.Queue):
@@ -55,6 +57,25 @@ class BleCommand:
             GATTAttributePermissions.readable | GATTAttributePermissions.writeable
         )
 
+        await self.server.add_new_characteristic(
+            service_uuid,
+            settings_uuid,
+            GATTCharacteristicProperties.read | 
+            GATTCharacteristicProperties.notify,
+            b"",
+            GATTAttributePermissions.readable
+        )
+
+        await self.server.add_new_characteristic(
+            service_uuid,
+            settings_update_uuid,
+            GATTCharacteristicProperties.read | 
+            GATTCharacteristicProperties.write |
+            GATTCharacteristicProperties.notify,
+            b"",
+            GATTAttributePermissions.readable | GATTAttributePermissions.writeable
+        )
+
         self.server.write_request_func = self.write_request
         self.server_started = False
 
@@ -82,6 +103,9 @@ class BleCommand:
             message = str(data).encode('utf-8')
             self.server.get_characteristic(selected_preset_uuid).value = message
             self.server.update_value(service_uuid, selected_preset_uuid)
+        elif name == "set setting list":
+            message = json.dumps(data).encode('utf-8')
+            await self.send_big_ble(message, settings_uuid)
 
     def write_request(self, characteristic, value, **kwargs):
         message = value.decode('utf-8')
@@ -89,7 +113,9 @@ class BleCommand:
         if self.server.get_characteristic(selected_preset_uuid) == characteristic:
             self.commands_queue.put_nowait(json.loads(message))
         elif self.server.get_characteristic(change_param_uuid) == characteristic:
-            self.commands_queue.put_nowait(dict(name = "set parameter", parameter = json.loads(message)))
+            self.commands_queue.put_nowait(dict(name = "set preset parameter", parameter = json.loads(message)))
+        elif self.server.get_characteristic(settings_update_uuid) == characteristic:
+            self.commands_queue.put_nowait(dict(name = "set settings", parameter = json.loads(message)))
 
     async def send_big_ble(self, data, uuid):
         CHUNK_SIZE = 200
