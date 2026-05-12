@@ -13,9 +13,8 @@ List of available plugins for the moment:
 If you don't find the plugin you looking for, you can add its class file in the "Plugins" folder by referring to the other plugin classes and your plugin's API (like MIDI, OSC, JSON-RPC... if it has one).
 
 
----------------------------
-    System Requirements    
----------------------------
+
+##  System Requirements    
 
 Hardware devices:
 - Raspberry PI 5, PI 4B or PI 400 (with at least 2Go of RAM / 4Go recommended)
@@ -29,29 +28,37 @@ OS:
 You also need a sound card like your faithful Scarlett and of course your favorite midi ou audio instrument
 
 
---------------------
-    Installation    
---------------------
+##  Installation    
 
 => The programm will run automatically when you turn up your Raspberry PI by creating vst_host systemd service
+```
 git clone https://github.com/TheophileDAL/VST_HOST.git
 cd VST_HOST
 chmod +x setup.sh
 sudo ./setup.sh
 sudo reboot
+```
 
-=> To disable the service at startup: 
+=> To disable the service at startup:
+```
 sudo systemctl disable vst_host.service 2>/dev/null
+```
 
 => To stop the service:
+```
 systemctl stop vst_host.service 2>/dev/null
+```
 
 => To restart the service:
+```
 sudo systemctl start vst_host.service
+```
 
 => You can also simply run the programm with:
+```
 sudo python3 vst_host.py
-sudo python3 vst_host.py --vc (to enable vocal commands if you have a microphone for)
+sudo python3 vst_host.py --vc #to enable vocal commands if you have a microphone for
+```
 
 ! You need to be in root mode if you count to install plugins by using VST_HOST with the app !
 
