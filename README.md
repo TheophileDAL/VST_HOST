@@ -23,6 +23,17 @@ List of available plugins for the moment:
 | ZynAddSubFx                   |                    |              |
 | Analog Lab 4 *(via wine and box64 and with a desktop OS version only / work well with no CPU-intensive VST)*| | |
 
+| Plugins          | Descriptions | Links |
+| ---------------- | ------------ | ----- |
+| Carla            | MIDI & Audio plugin host by KXStudio| https://kx.studio/Applications:Carla |
+| Organteq         | MIDI plugin by Modartt *(demo version only)*| https://www.modartt.com/organteq_overview?ref=cGFnZT1vcmdhbnRlcSZleHQ9 |
+| Pianoteq         | MIDI plugin by Modartt *(demo version only)*| https://www.modartt.com/pianoteq_overview?ref=cGFnZT1waWFub3RlcSZleHQ9 |
+| ZynAddSubFx      | synthesizer software *(for MIDI keyboard)* | https://zynaddsubfx.sourceforge.io/ |
+| Analog Lab 4     | MIDI plugin by Arturia *(run on raspberry via wine and box64 and with a desktop OS version only / work well with no CPU-intensive VST)*| https://www.arturia.com/fr/products/software-instruments/analoglab/overview |
+| Guitarix           | Virtual guitar amplifier Audio plugin | https://guitarix.org/ |
+| Rakarrack-Plus     | Virtual guitar effects pedalboard Audio plugin | https://rakarrack.sourceforge.net/ |
+
+
 
 
 If you don't find the plugin you looking for, you can add its class file in the "Plugins" folder by referring to the other plugin classes and your plugin's API (like MIDI, OSC, JSON-RPC... if it has one).
