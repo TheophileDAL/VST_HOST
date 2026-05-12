@@ -68,8 +68,6 @@ async def main():
     await ble_command.configure()
     await ble_command.start()
 
-    audio = Audio()
-
     with open(SETTING_LIST_PATH, 'r', encoding='utf-8') as fichier:
         setting_list = json.load(fichier)
     
@@ -86,8 +84,8 @@ async def main():
                 await ble_command.task("set presets list", host_list)
                 await asyncio.sleep(1)
 
-                output = audio.deviceList("output")
-                input = audio.deviceList("input")
+                output = Audio.deviceList("output")
+                input = Audio.deviceList("input")
                 if len(output) > 0:
                     setting_list[0]["list"][0]["list"] = input
                     setting_list[0]["list"][1]["list"] = output
@@ -103,7 +101,7 @@ async def main():
                 host_class = host_classes[command["stream"]]["list"][command["host"]]
                 
                 if host_class.is_installed():
-                    host = host_class(audio)
+                    host = host_class()
                     await host.start()
 
                     preset_list = host.get_presets()
@@ -131,7 +129,7 @@ async def main():
                 success = host_class.install(print)
                 
                 if (success):
-                    host = host_class(audio)
+                    host = host_class()
                     await host.start()
 
                     preset_list = host.get_presets()
@@ -163,7 +161,7 @@ async def main():
 
                     await ble_command.task("set presets list", host_list)
 
-                    host = host_classes[0]["list"][0](audio)
+                    host = host_classes[0]["list"][0]()
                     actual_host = 0
                     await host.start()
 
