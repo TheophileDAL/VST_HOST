@@ -1,4 +1,3 @@
-import subprocess
 import asyncio
 import glob
 import os
@@ -8,7 +7,6 @@ from jack_server import Jack
  
 from pythonosc import udp_client, dispatcher, osc_server
 from pythonosc.osc_message_builder import OscMessageBuilder
-from audio import Audio
 
 HOST_NAME = "ZynAddSubFx"
 ZYNC_EXE = "/usr/bin/zynaddsubfx"
@@ -28,14 +26,14 @@ def get_info() -> dict:
 
 class ZynAddSubFx(Plugin):
 
-    def __init__(self, audio : Audio):
+    def __init__(self):
         # Répertoires standards de presets (.xiz = instrument, .xmz = master)
         self.presets_dir = ZYNC_PRESETS_DIR
  
         self.process: asyncio.subprocess.Process | None = None
         self.presets = []
         self.preset_index = [0, 0]
-        self.jack = Jack(audio)
+        self.jack = Jack()
  
         # Client OSC pour envoyer des messages ZynAddSubFX
         self.osc_client = udp_client.SimpleUDPClient(ZYNC_OSC_HOST, ZYNC_OSC_PORT)

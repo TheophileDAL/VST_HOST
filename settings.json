@@ -1,0 +1,53 @@
+[
+    {
+        "name": "devices",
+        "list": [
+            {
+                "name": "audio in",
+                "selected": "Scarlett Solo USB",
+                "list": [
+                    {
+                        "name": "Scarlett Solo USB",
+                        "index": 0,
+                        "hw": 2,
+                        "max_input_channels": 2,
+                        "max_output_channels": 2,
+                        "samplerate": 44100.0
+                    }
+                ]
+            },
+            {
+                "name": "audio out",
+                "selected": "Scarlett Solo USB",
+                "list": [
+                    {
+                        "name": "Scarlett Solo USB",
+                        "index": 0,
+                        "hw": 2,
+                        "max_input_channels": 2,
+                        "max_output_channels": 2,
+                        "samplerate": 44100.0
+                    }
+                ]
+            },
+            {
+                "name": "midi",
+                "selected": "",
+                "list": []
+            }
+        ]
+    },
+    {
+        "name": "preferences",
+        "list": [
+            {
+                "name": "favorites",
+                "list": []
+            },
+            {
+                "name": "start vst",
+                "list": []
+            }
+        ]
+    }
+]

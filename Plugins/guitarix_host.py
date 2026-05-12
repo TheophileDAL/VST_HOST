@@ -5,7 +5,6 @@ import os
 
 from plugin import Plugin
 from jack_server import Jack
-from audio import Audio
 
 HOST_NAME = "Guitarix"
 GUITARIX_EXE = "/usr/bin/guitarix"
@@ -23,11 +22,11 @@ def get_info() -> dict:
     }
  
 class Guitarix(Plugin):
-    def __init__(self, audio : Audio):
+    def __init__(self):
         self.process = None
         self.presets = []
         self.preset_index = 0
-        self.jack = Jack(audio)
+        self.jack = Jack()
  
     # ------------------------------------------------------------------
     # Démarrage

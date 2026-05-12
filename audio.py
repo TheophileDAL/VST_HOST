@@ -1,27 +1,43 @@
 import sounddevice as sd
 import re
+import os
+import json
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SETTING_LIST_PATH = os.path.join(BASE_DIR,"settings.json")
 
 class Audio:
 
-    def __init__(self):
-        self.selected_output = None
+    @classmethod
+    def getDevice(cls, kind:str):
+        if kind != "input" and kind != "output":
+            return None
+                
+        devices = cls.deviceList(kind)
 
-    def setSelectedOutput(self, name : str):
-        self.selected_output = name
+        with open(SETTING_LIST_PATH, 'r', encoding='utf-8') as fichier:
+            setting_list = json.load(fichier)
 
-    def getOutputDevice(self):
-        devices = self.outputDeviceList()
+        if len(devices) == 0:
+            return None
 
-        if len(devices) > 0 and self.selected_output == None:
-            self.selected_output = devices[0]["name"]
+        if kind == "input":
+            index = 0
+        else:
+            index = 1
 
-        return next((device for device in devices if device["name"] == self.selected_output), None)
+        selected = setting_list[0]["list"][index]["selected"]
+        if selected not in (device["name"] for device in devices):
+            selected = devices[0]["name"]
 
-    def outputDeviceList(self):
+        return next((device for device in devices if device["name"] == selected), None)
+
+    @classmethod
+    def deviceList(cls, kind:str):
         try:
             sd._terminate()
             sd._initialize()
-            devices = sd.query_devices(kind="output")
+            devices = sd.query_devices(kind=kind)
 
             if isinstance(devices, tuple) == False:
                 devices = (devices,)
@@ -42,7 +58,7 @@ class Audio:
                                         max_input_channels = device["max_input_channels"],
                                         max_output_channels = device["max_output_channels"],
                                         samplerate = device["default_samplerate"]))
-
+                
             return device_list
 
         except:

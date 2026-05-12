@@ -5,7 +5,6 @@ import os
 
 from plugin import Modartt
 from jack_server import Jack
-from audio import Audio
 
 HOST_NAME = "Pianoteq"
 PIANOTEQ_EXE = "pianoteq"
@@ -24,11 +23,11 @@ def get_info() -> dict:
 
 class Pianoteq(Modartt):
 
-    def __init__(self, audio : Audio):  
+    def __init__(self):  
         self.process = None
         self.presets = []
         self.preset_index = 0
-        self.jack = Jack(audio)
+        self.jack = Jack()
         
     @classmethod
     def is_installed(cls) -> bool:

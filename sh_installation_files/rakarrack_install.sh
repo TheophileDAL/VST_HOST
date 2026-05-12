@@ -39,28 +39,19 @@ fi
 
 git clone https://github.com/Stazed/ntk-unofficial.git
 cd ntk-unofficial
-./waf configure
-./waf
-./waf install
+mkdir build
+cd build
+cmake ..
+make
+make install
 
-echo "Vérification de NTK..."
-if ! pkg-config --exists ntk; then
-    echo "Installation de NTK..."
-    apt-get install -y libntk-dev || {
-        rm -rf /tmp/ntk
-        git clone https://github.com/linuxaudio/ntk.git /tmp/ntk
-        cd /tmp/ntk
-        ./waf configure && ./waf && ./waf install
-        cd -
-    }
-fi
+#3.Récupération du code source de Rakarrack-plus
 
 if [ -d "${TMP_DIR}/rakarrack-plus" ]; then
     echo "[!] Existing directory found, removing..."
     rm -rf "${TMP_DIR}/rakarrack-plus"
 fi
 
-#3.Récupération du code source de Rakarrack-plus
 echo "[+] Clonage du dépot..."
 git clone https://github.com/Stazed/rakarrack-plus.git
 cd rakarrack-plus

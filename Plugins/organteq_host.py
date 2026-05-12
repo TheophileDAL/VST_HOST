@@ -1,11 +1,9 @@
-import subprocess
 import asyncio
 import requests
 import os
 
 from jack_server import Jack
 from plugin import Modartt
-from audio import Audio
 
 HOST_NAME = "Organteq"
 ORGANTEQ_EXE = "organteq"
@@ -24,11 +22,11 @@ def get_info() -> dict:
 
 class Organteq(Modartt):
 
-    def __init__(self, audio : Audio):
+    def __init__(self):
         self.process = None
         self.process: asyncio.subprocess.Process | None = None
         self.preset_index = 0
-        self.jack = Jack(audio)
+        self.jack = Jack()
         
     @classmethod
     def is_installed(cls) -> bool:

@@ -11,3 +11,6 @@ List of available plugins for the moment:
 - (Audio)Rakarrack-Plus
 
 If you don't find the plugin you looking for, you can add its class file in the "Plugins" folder by referring to the other plugin classes and your plugin's API (like MIDI, OSC, JSON-RPC... if it has one).
+
+Devices :
+- Raspeberry pi 3 (for low vst CPU or try overclocking), 4 and 5

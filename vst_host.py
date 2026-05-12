@@ -2,10 +2,14 @@ import asyncio
 import importlib.util
 import os
 import argparse
+import json
 
 from vocal_command import VocalCommand
 from ble_command import BleCommand
 from audio import Audio
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+SETTING_LIST_PATH = os.path.join(BASE_DIR,"settings.json")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--vc", help="enable vocal commands", action="store_true")
@@ -50,7 +54,6 @@ for filename in os.listdir(PLUGINS_DIR):
 
 async def main():
 
-    server = None
     preset_index = 0
     preset_info = None
     host = None
@@ -66,6 +69,9 @@ async def main():
     await ble_command.start()
 
     audio = Audio()
+
+    with open(SETTING_LIST_PATH, 'r', encoding='utf-8') as fichier:
+        setting_list = json.load(fichier)
     
     try:
         while True:
@@ -78,6 +84,15 @@ async def main():
                 
                 await asyncio.sleep(3)
                 await ble_command.task("set presets list", host_list)
+                await asyncio.sleep(1)
+
+                output = audio.deviceList("output")
+                input = audio.deviceList("input")
+                if len(output) > 0:
+                    setting_list[0]["list"][0]["list"] = input
+                    setting_list[0]["list"][1]["list"] = output
+
+                await ble_command.task("set setting list", setting_list)
 
             elif command["name"] == "load host":
                 if host is not None:
@@ -108,7 +123,7 @@ async def main():
                 presets_info = host.get_preset_info()
                 await ble_command.task("set preset info", presets_info)
 
-            elif command["name"] == "set parameter":
+            elif command["name"] == "set preset parameter":
                 host.set_parameter(command["parameter"])
                 
             elif command["name"] == "install host":
@@ -125,6 +140,21 @@ async def main():
 
                     actual_stream = command["stream"]
                     actual_host = command["host"]
+
+            elif command["name"] == "change settings":
+                setting = setting_list[command["settings"][0]]
+
+                for i in range(1, len(command["settings"])):
+                    if "list" not in setting["list"][command["settings"][i]]:
+                        setting["selected"] = setting["list"][command["settings"][i]]["name"]
+                        break
+                    else:
+                        setting = setting["list"]
+                        setting = setting[command["settings"][i]]
+
+                with open(SETTING_LIST_PATH, 'w', encoding='utf-8') as f:
+                    json.dump(setting_list, f, ensure_ascii=False, indent=4)
+
 
             elif command["name"] == "vocal":
                 text = command["command"]

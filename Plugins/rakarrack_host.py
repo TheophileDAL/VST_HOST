@@ -9,7 +9,6 @@ import os
 
 from plugin import Plugin
 from jack_server import Jack
-from audio import Audio
 
 HOST_NAME = "Rakarrack"
 RAKARRACK_EXE = "rakarrack-plus"
@@ -62,12 +61,12 @@ def get_info() -> dict:
 
 class Rakarrack(Plugin):
 
-    def __init__(self, audio : Audio):
+    def __init__(self):
         self.process = None
         self.banks = []
         self.presets = []
         self.preset_index = [0, 0]
-        self.jack = Jack(audio)
+        self.jack = Jack()
         self.midi_out = None
     
     @classmethod

@@ -12,12 +12,11 @@ JACK_COMMAND = [
 
 class Jack:
 
-    def __init__(self, audio : Audio):
+    def __init__(self):
         self.process: asyncio.subprocess.Process | None = None
-        self.audio = audio
 
     async def start(self):
-        device = self.audio.getOutputDevice()
+        device = Audio.getDevice("output")
 
         if device is not None:
             jack_cmd = JACK_COMMAND.copy()
@@ -25,7 +24,6 @@ class Jack:
         else:
             jack_cmd = ["jackd", "-d", "dummy"]
 
-        print(JACK_COMMAND)
         print(jack_cmd)
 
         self.process = await asyncio.create_subprocess_exec(
