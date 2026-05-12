@@ -57,10 +57,9 @@ systemctl stop vst_host.service 2>/dev/null
 sudo systemctl start vst_host.service
 ```
 
-=> You can also simply run the programm with:
+=> You can also simply run the programm with (`--vc` enable the vocal commands):
 ```
-sudo python3 vst_host.py
-sudo python3 vst_host.py --vc #to enable vocal commands if you have a microphone for
+sudo python3 vst_host.py --vc
 ```
 
 **You need to be in root mode if you count to install plugins by using VST_HOST with the app**
