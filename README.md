@@ -67,4 +67,7 @@ sudo python3 vst_host.py --vc
 
 ##  iOS App    
 
+Simulated on iPhone 11 to 17
 Soon in the app store...
+
+Source code : https://github.com/TheophileDAL/VST_HOST_APP
