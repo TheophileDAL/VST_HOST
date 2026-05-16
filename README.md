@@ -72,17 +72,16 @@ Simulated on iPhone 11 to 17 => Soon in the app store...
 Source code : https://github.com/TheophileDAL/VST_HOST_APP
 
 
-##  Développements à venir
+## Upcoming Features
 
 | Services | Descriptions |
 | -------- | ------------ |
-| Barre de transport | Enregistrement audio et MIDI / Loop / Export des enregistrements sur un PC... |
-| Favoris | Sélections de ses VST préférés |  
-| VST par défaut | Choix d'un VST qui sera directement lancer au démarrage de la Raspberry PI |
-| Pré-écoute | Tester le son d'un VST au lieu de le charger pour faciliter la sélection |
+| Transport Bar | Audio and MIDI recording / Loop / Export recordings to a PC... |
+| Favorites | Save and manage your favorite VSTs |
+| Default VST | Choose a VST to automatically launch when the Raspberry Pi starts |
+| Preview | Preview a VST sound before loading it to make selection easier |
 
 
-##  Signaler un Bug / Recommendation
+## Report a Bug / Suggestion
 
 https://theophile.atlassian.net/jira/software/form/8be1f6e4-b8d0-430a-b8c4-e822f1a0f7e0?atlOrigin=eyJpIjoiYmFiNGExNDMyYTA5NDJkNDgzMmU4ZDJhOGE2NzgwZDAiLCJwIjoiaiJ9
-
