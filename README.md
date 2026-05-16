@@ -1,5 +1,5 @@
 # VST_HOST
-A project to host, install, select and control music plugins easily (for midi controller and guitar electric), on a raspberry pi, with an ios app or vocal commands
+A project to host, install, select and control music plugins easily (for midi controller and electric guitar), on a raspberry pi, with an ios app or vocal commands
 
 List of available plugins for the moment:
 
