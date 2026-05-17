@@ -16,7 +16,7 @@ List of available plugins for the moment:
 
 If you don't find the plugin you looking for, you can add its class file in the "Plugins" folder by referring to the other plugin classes and your plugin's API (like MIDI, OSC, JSON-RPC... if it has one).
 
-<img src="docs/images/Arhitecture.png"></img>
+<img src="docs/images/Architecture.png"></img>
 
 https://github.com/user-attachments/assets/63eeb3b5-79a3-4cd0-b571-18d2d85a1bfa
 
